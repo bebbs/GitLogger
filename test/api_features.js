@@ -19,4 +19,11 @@ describe('The GitLogger API', function() {
     });
   });
 
+  it('Returns a list of commits for any repo', function() {
+    casper.thenOpen(host + '/api/commits/tansaku/bowling_scorer_mvp_sequence', function() {
+      expect('body').to.include.text('"message":"can play two frames"');
+      expect('body').to.include.text('"message":"able to play a third frame"');
+    });
+  });
+
 });
