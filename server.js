@@ -13,11 +13,14 @@ app.get('/api', function(request, response) {
   response.json(apiStatus);
 })
 
-app.get('/api/commits/bebbs/BorisBikes', function(request, response) {
+app.get('/api/commits/:user/:repo', function(request, response) {
+
+  var user = request.params.user;
+  var repo = request.params.repo;
 
   var options = {
     host: 'api.github.com',
-    path: '/repos/bebbs/BorisBikes/commits',
+    path: '/repos/' + user + '/' + repo + '/commits',
     headers: {'User-Agent': 'GitLogger'},
     method: 'GET'
   };
@@ -42,9 +45,11 @@ app.get('/api/commits/bebbs/BorisBikes', function(request, response) {
 
   function extractInfo(data) {
     var hash = {};
-    hash['commit'] = [];
     for(var i = 0; i <= data.length-1; i++) {
-      hash['commit'].push(data[i].commit.message);
+      hash[i] = {
+                  "message": data[i].commit.message,
+                  "sha": data[i].sha
+                }
     }
     response.json(hash);
   };

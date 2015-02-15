@@ -15,6 +15,7 @@ describe('The GitLogger API', function() {
   it('Returns a list of commits for a given repo', function() {
     casper.thenOpen(host + '/api/commits/bebbs/BorisBikes', function() {
       expect('body').to.include.text('"message":"Update README.md"');
+      expect('body').to.include.text('"sha":"4cb42e29da3dd347ea322166f93d73e278348c34"')
     });
   });
 
