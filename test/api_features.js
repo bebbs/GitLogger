@@ -12,4 +12,10 @@ describe('The GitLogger API', function() {
     });
   });
 
+  it('Returns a list of commits for a given repo', function() {
+    casper.thenOpen(host + '/api/commits/bebbs/BorisBikes', function() {
+      expect('body').to.include.text('"message":"Update README.md"');
+    });
+  });
+
 });
