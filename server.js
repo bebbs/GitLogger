@@ -25,7 +25,7 @@ app.get('/api/commits/:user/:repo', function(request, response) {
     method: 'GET'
   };
 
-  callback = function(res) {
+  function callback(res) {
     var str = '';
 
     res.on('data', function(chunk) {
@@ -33,7 +33,7 @@ app.get('/api/commits/:user/:repo', function(request, response) {
     });
 
     res.on('end', function() {
-      extractInfo(JSON.parse(str));
+      extractInfo(JSON.parse(str), response);
     });
 
     res.on('error', function(e) {
@@ -43,18 +43,22 @@ app.get('/api/commits/:user/:repo', function(request, response) {
 
   https.request(options, callback).end();
 
-  function extractInfo(data) {
-    var hash = {};
-    for(var i = 0; i <= data.length-1; i++) {
-      hash[i] = {
-                  "message": data[i].commit.message,
-                  "sha": data[i].sha
-                }
-    }
-    response.json(hash);
-  };
 });
 
+function extractInfo(data, response) {
+  var hash = {};
+  for(var i = 0; i <= data.length-1; i++) {
+    buildHash(hash, i, data)
+  }
+  response.json(hash);
+};
+
+function buildHash(hash, i, data) {
+  hash[i] = {
+              "message": data[i].commit.message,
+              "sha": data[i].sha
+            }
+}
 
 server.listen(port, function() {
   console.log('Server listening on port ' + port);
