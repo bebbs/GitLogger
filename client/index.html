@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GitLogger</title>
+  <link href='http://necolas.github.io/normalize.css/3.0.2/normalize.css' rel='stylesheet'>
+  <link href='stylesheets/custom.css' rel='stylesheet'>
+</head>
+
+<body ng-app='app'>
+  <h1>GitLogger</h1>
+
+  <section class='container'>
+    <section class='col left'>
+      <h2>Add a repo</h2>
+
+      <section class='add-repo'>
+        <label>Github username:</label>
+        <input name='user' placeholder='eg. tansaku'>
+        <label>Repository:</label>
+        <input name='repo' placeholder='eg. boris-bikes'>
+        <input type='submit' value='Grab repo'>
+      </section>
+
+      <section ng-controller='RepoCtrl'>
+        <ul>
+          <li>{{ commits[0].message }}</li>
+          <li>{{ commits[1].message }}</li>
+          <li>{{ commits[2].message }}</li>
+        </ul>
+      </section>
+    </section>
+
+    <section class='col right'>
+      <h2>Markdown</h2>
+
+      <section class='markdown'>
+        <em>Generated markdown will go here.</em>
+      </section>
+    </section>
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
+
+  <script>
+    var app = angular.module('app', []);
+    app.controller('RepoCtrl', function ($scope) {
+      $scope.commits = [
+        {
+          message: 'Update README.md',
+          sha: 'jk3h4bjkhb5jkbkj3b25jkhb4jk23b'
+        },
+        {
+          message: 'Board has one cell',
+          sha: 'kljn234lkj2n34lkjn34kjnj34hgf4'
+        },
+        {
+          message: 'Player has one ship',
+          sha: 'bfx76b4c7bvc4x6vc7xbvcx65bcv7g'
+        }
+      ]
+    });
+  </script>
+</body>
+
+</html>

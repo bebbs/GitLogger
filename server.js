@@ -5,7 +5,7 @@ var port = 9999;
 var https = require('https');
 
 app.get('/', function(request, response) {
-  response.send('Hello World!')
+  response.send('client/index.html')
 })
 
 app.get('/api', function(request, response) {
@@ -25,7 +25,8 @@ app.get('/api/commits/:user/:repo', function(request, response) {
     method: 'GET'
   };
 
-  function callback(res) {
+
+  function grabData(res) {
     var str = '';
 
     res.on('data', function(chunk) {
@@ -41,9 +42,10 @@ app.get('/api/commits/:user/:repo', function(request, response) {
     });
   };
 
-  https.request(options, callback).end();
+  https.request(options, grabData).end();
 
 });
+
 
 function extractInfo(data, response) {
   var hash = {};
